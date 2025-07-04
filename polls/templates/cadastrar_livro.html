@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Online - IFPI</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxcRVjeg_4VBl6L9DIpY2KPglLPA7ITm5Axw&s" alt="Logo do IFPI" class="logo">
+            <h1>Biblioteca Online IFPI</h1>
+        </div>
+    </header>
+
+    <main>
+        <div>
+        <form method="post" class="book-form">  
+            <h2>Cadastre o seu Livro</h2>
+            {% csrf_token %}
+            <div>
+                <h3>Itens Obrigatórios</h3>
+                    {{ form.as_p }}
+            <button type="submit" class="submit-btn">Cadastrar Livro</button>
+            </div>
+        </form>
+        </div>
+    </main>
+
+    <footer>
+        <nav class="footer-nav">
+            <a href="{% url 'sobre_mim' %}" class="nav-link">Sobre Mim</a>
+            <a href="#" class="nav-link">Aviso Legal</a>
+            <a href="#" class="nav-link">Termos de Uso</a>
+            <a href="#" class="nav-link">Fale com o Suporte</a>
+        </nav>
+    </footer>
+    <footer>
+        <h3>Siga a gente nas redes sociais</h3>
+        <nav class="footer-social">
+            <a href="#"><img class="social-image" src="{% static 'images/Instagram Logo (PNG-1080p) - Vector69Com.png' %}"/></a>
+            <a href="#"><img class="social-image" src="{% static 'images/Facebook f (2019) Flat Logo Icon (PNG1080p) - Vector69Com.png' %}"></a>
+            <a href="#"><img class="social-image" src="{% static 'images/novo-design-de-icone-x-do-logotipo-do-twitter-em-2023_1017-45418.avif' %}"></a>
+        </nav>
+        <p class="copyright">&copy; 2025 Biblioteca Online IFPI. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

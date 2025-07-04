@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Página Inicial - Biblioteca</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Bem-vindo à Biblioteca</h1>
+        <a href="{% url 'cadastrar_livro' %}" class="btn">Cadastrar Novo Livro</a>
+    </div>
+</body>
+</html>
