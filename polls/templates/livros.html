@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Livros Disponíveis</title>
+    <link rel="stylesheet" href="{% static 'css/books.css' %}">
+</head>
+<body>
+    <h1>Livros Disponíveis</h1>
+
+    <form method="get" action="{% url 'livros' %}">
+        <div class="search-container">
+            <input
+                type="text"
+                id="search"
+                name="q"
+                placeholder="Buscar livros..."
+                autocomplete="off"
+                value="{{ request.GET.q }}"
+            />
+            <div id="suggestions"></div>
+        </div>
+        <button type="submit"> Buscar</button>
+    </form>
+
+    <ul>
+        {% if livros %}
+            {% for livro in livros %}
+                <li>
+                    <a href="{% url 'detalhe_livro' livro.id %}">
+                        <strong>{{ livro.titulo }}</strong>
+                    </a> – {{ livro.autor }}
+                </li>
+            {% endfor %}
+        {% else %}
+            <li>Nenhum livro encontrado.</li>
+        {% endif %}
+    </ul>
+
+    {{ livros_titulos|json_script:"livros-data" }}
+
+    <script src="{% static 'js/auto-search.js' %}"></script>
+</body>
+</html>

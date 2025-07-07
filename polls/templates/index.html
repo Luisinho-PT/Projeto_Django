@@ -7,9 +7,29 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
 </head>
 <body>
+    <!-- Seção de boas-vindas -->
     <div class="container">
         <h1>Bem-vindo à Biblioteca</h1>
         <a href="{% url 'cadastrar_livro' %}" class="btn">Cadastrar Novo Livro</a>
     </div>
+
+
+    <!-- Link para ver os livros cadastrados -->
+    <div class="cadastrados">
+        <h2>Você pode ver os livros cadastrados clicando no botão abaixo.</h2>
+        <a href="{% url 'livros' %}" class="btn">Ver Livros Cadastrados</a>
+    </div>
+
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <p>&copy; 2025 Biblioteca Online IFPI. Todos os direitos reservados.</p>
+        <nav>
+            <a href="{% url 'sobre_mim' %}">Sobre Mim</a>
+            <a href="#">Aviso Legal</a>
+            <a href="#">Termos de Uso</a>
+            <a href="#">Fale com o Suporte</a>
+        </nav>
+    </footer>
 </body>
 </html>
