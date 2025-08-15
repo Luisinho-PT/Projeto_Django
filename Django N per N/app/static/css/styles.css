@@ -1,0 +1,308 @@
+/* --- TRICK 1: Variáveis CSS e Fontes Futuristas --- */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap');
+
+:root {
+  --bg-color: #0d0c22;
+  --glow-color: #7b2cbf;
+  --secondary-glow: #219ebc;
+  --accent-color: #fb8500;
+  --text-color: #edf2f4;
+  --glass-bg: rgba(22, 21, 51, 0.4);
+  --border-color: rgba(255, 255, 255, 0.1);
+  --gold-color: #FFD700;
+  --gold-glow: rgba(255, 215, 0, 0.7);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- EFEITOS GLOBAIS --- */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--bg-color);
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  color: var(--text-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.aurora {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 600px at var(--mouse-x) var(--mouse-y),
+    rgba(123, 44, 191, 0.2),
+    transparent 40%
+  );
+  z-index: -1;
+  transition: background 0.2s ease-out;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  z-index: 1;
+}
+
+/* --- CABEÇALHO --- */
+.main-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInDown 1s ease-out;
+}
+
+.main-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3rem;
+  background: linear-gradient(90deg, var(--secondary-glow), var(--accent-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(251, 133, 0, 0.5);
+}
+
+.subtitle { font-size: 1.1rem; opacity: 0.8; }
+
+/* --- CARDS E LAYOUT --- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+#card-artigo { animation-delay: 0.2s; }
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 30px var(--glow-color);
+  border-color: var(--glow-color);
+}
+
+.card .title {
+  font-family: 'Orbitron', sans-serif;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* --- FORMULÁRIOS E INPUTS --- */
+.form-group { position: relative; margin-bottom: 2.5rem; }
+
+.input, .textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px solid var(--border-color);
+  padding: 10px 0;
+  font-size: 1rem;
+  color: var(--text-color);
+  font-family: inherit;
+  resize: vertical;
+}
+.input:focus, .textarea:focus { outline: none; }
+
+.label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.input:focus ~ .label,
+.input:not(:placeholder-shown) ~ .label,
+.textarea:focus ~ .label,
+.textarea:not(:placeholder-shown) ~ .label {
+  top: -20px;
+  font-size: 0.8rem;
+  color: var(--accent-color);
+  opacity: 1;
+}
+
+.input-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--glow-color);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+.input:focus ~ .input-border, .textarea:focus ~ .input-border { transform: scaleX(1); }
+
+/* --- NOVA SELEÇÃO MÚLTIPLA CUSTOMIZADA --- */
+.label.static-label {
+  position: static;
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.custom-select-container {
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.5rem;
+  background: rgba(0,0,0,0.2);
+}
+
+.custom-option {
+  position: relative;
+}
+
+.custom-option input[type="checkbox"] {
+  display: none; /* Esconde o checkbox real */
+}
+
+.custom-option label {
+  display: block;
+  padding: 12px 18px;
+  margin: 4px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  color: var(--text-color);
+  border: 1px solid transparent;
+}
+
+.custom-option label:hover {
+  background: rgba(255, 215, 0, 0.1);
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.custom-option input[type="checkbox"]:checked + label {
+  background: var(--gold-color);
+  color: var(--bg-color);
+  font-weight: bold;
+  border-color: var(--gold-color);
+  box-shadow: 0 0 20px var(--gold-glow);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Efeito de brilho radiante na seleção */
+.custom-option .glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.custom-option input[type="checkbox"]:checked + label .glow {
+  transform: translate(-50%, -50%) scale(15);
+  opacity: 1;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), opacity 1s ease;
+}
+
+/* Scrollbar Dourada */
+.custom-select-container::-webkit-scrollbar { width: 8px; }
+.custom-select-container::-webkit-scrollbar-track { background: transparent; }
+.custom-select-container::-webkit-scrollbar-thumb {
+  background: var(--gold-color);
+  border-radius: 4px;
+}
+
+/* --- BOTÕES --- */
+.btn {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--accent-color);
+  border-radius: 8px;
+  background-color: transparent;
+  color: var(--accent-color);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease-in-out;
+}
+.btn span { position: relative; z-index: 1; }
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(120deg, transparent, var(--accent-color), transparent);
+  transition: left 0.4s ease-in-out;
+}
+.btn:hover { color: var(--bg-color); }
+.btn:hover::before { left: 100%; }
+
+/* --- ANIMAÇÕES E NOTIFICAÇÃO --- */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toast-notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 1000;
+  background: rgba(30, 220, 120, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(43, 255, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  transform: translateX(120%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.toast-notification.show { transform: translateX(0); opacity: 1; visibility: visible; }
+.toast-icon { font-size: 1.8rem; color: #2bff00; text-shadow: 0 0 10px #2bff00; }
+.toast-message { color: var(--text-color); }
+.toast-notification::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 4px; width: 100%;
+  background-color: #2bff00;
+  box-shadow: 0 0 8px #2bff00;
+  border-radius: 0 0 0 12px;
+}
+.toast-notification.show::before { animation: progress-bar 5s linear forwards; }
+@keyframes progress-bar { to { width: 0; } }

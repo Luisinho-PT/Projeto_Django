@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard de Criação | Neo-Admin</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="aurora"></div>
+
+  <div id="toast-container">
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+        <div class="toast-notification" id="success-toast">
+          <div class="toast-icon">✓</div>
+          <p class="toast-message">{{ message }}</p>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <main class="container">
+    <header class="main-header">
+      <h1 class="main-title">Dashboard de Criação</h1>
+      <p class="subtitle">Gerencie suas publicações e artigos com estilo.</p>
+    </header>
+
+    <div class="card-grid">
+      <section class="card" id="card-publicacao">
+        <h2 class="title">Nova Publicação</h2>
+        <form action="{% url 'gerenciar_itens' %}" method="POST" class="form">
+          {% csrf_token %}
+          <div class="form-group">
+            <input
+              type="text"
+              id="publicacao-titulo"
+              name="titulo"
+              maxlength="200"
+              required
+              placeholder=" "
+              class="input"
+            />
+            <label for="publicacao-titulo" class="label">Título da Publicação</label>
+            <div class="input-border"></div>
+          </div>
+          <button type="submit" class="btn" name="action" value="criar_publicacao">
+            <span>Criar Publicação</span>
+          </button>
+        </form>
+      </section>
+
+      <section class="card" id="card-artigo">
+        <h2 class="title">Novo Artigo</h2>
+        <form action="{% url 'gerenciar_itens' %}" method="POST" class="form">
+          {% csrf_token %}
+          <div class="form-group">
+            <input type="text" id="artigo-titulo" name="titulo" maxlength="200" required placeholder=" " class="input" />
+            <label for="artigo-titulo" class="label">Título do Artigo</label>
+            <div class="input-border"></div>
+          </div>
+          <div class="form-group">
+            <textarea id="artigo-descricao" name="descricao" rows="5" required placeholder=" " class="textarea"></textarea>
+            <label for="artigo-descricao" class="label">Descrição</label>
+            <div class="input-border"></div>
+          </div>
+
+          <div class="form-group">
+            <label class="label static-label">Publicações Associadas</label>
+            <div class="custom-select-container">
+              {% for pub in publicacoes %}
+              <div class="custom-option">
+                <input
+                  type="checkbox"
+                  name="publicacoes"
+                  value="{{ pub.id }}"
+                  id="pub-{{ pub.id }}"
+                />
+                <label for="pub-{{ pub.id }}">
+                  <span class="glow"></span>
+                  {{ pub.titulo }}
+                </label>
+              </div>
+              {% empty %}
+              <p class="no-options">Nenhuma publicação cadastrada</p>
+              {% endfor %}
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" name="action" value="criar_artigo">
+            <span>Criar Artigo</span>
+          </button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Script de Efeito Aurora e Toast (permanece o mesmo)
+    document.addEventListener('mousemove', (e) => {
+      document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const toast = document.getElementById('success-toast');
+      if (toast) {
+        setTimeout(() => toast.classList.add('show'), 300);
+        setTimeout(() => {
+          toast.classList.remove('show');
+          toast.addEventListener('transitionend', () => toast.remove());
+        }, 5300);
+      }
+    });
+  </script>
+</body>
+</html>
